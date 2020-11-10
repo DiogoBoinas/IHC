@@ -14,7 +14,7 @@ function setup() {
   y_moves = 0;
   x_moves = 0;
   var atual_x=620//valor inicial da esquerda
-  var colors = new tracking.ColorTracker(['cyan']);
+  var colors = new tracking.ColorTracker(['magenta']);
 
   colors.on('track', function(event) {
    
