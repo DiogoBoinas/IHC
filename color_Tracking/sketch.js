@@ -23,8 +23,8 @@ function setup() {
 }
 
 function draw() {
-  //x varia entre 0 esquerda e ~460 direita
-  //y varia entr e 0 cima e ~270 baixo
+  //x varia entre 0 esquerda e ~618 direita
+  //y varia entr e 0 cima e ~458 baixo
 
   // console.log(trackingData);
   total_side_movement = 0
@@ -32,9 +32,15 @@ function draw() {
     for (var i = 0; i < trackingData.length; i++) { //loop through each of the detected colors
       // console.log( trackingData[i] )
       rect(trackingData[i].x,trackingData[i].y,trackingData[i].width,trackingData[i].height)
-      console.log(trackingData[i].x)
-      console.log(trackingData[i].y)
+     
+      //console.log(max(trackingData[i].x)
+      //console.log(max(trackingData[i].y,total_side_movement))
+      total_side_movement = 0
 
     }
+    console.log(trackingData[0])
+    console.log(trackingData[-1])
   }
+  
+
 }
