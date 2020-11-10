@@ -14,6 +14,7 @@ function setup() {
   y_moves = 0;
   x_moves = 0;
   var atual_x=620//valor inicial da esquerda
+  var atual_y=0 
   var colors = new tracking.ColorTracker(['cyan']);
 
   colors.on('track', function(event) {
@@ -30,9 +31,19 @@ function setup() {
         }else{
           ("igual x")
         }
-        
+        if(rect.y>atual_y){
+          console.log("ir para baixo")
+        }
+        else if(rect.y<atual_y){
+          console.log("ir para cima")
+        }
+        else{
+          console.log("igual a y")
+        }
         atual_x=rect.x
-        console.log("valor atual "+ atual_x);
+        atual_y=rect.y
+        console.log("X: valor atual "+ atual_x);
+        console.log("Y: valor atual "+ atual_x);
         console.log(rect.x, rect.y, rect.height, rect.width, rect.color);
       });
     }
