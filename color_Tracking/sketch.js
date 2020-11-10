@@ -19,13 +19,24 @@ function setup() {
   });*/
 
   
-  var colors = new tracking.ColorTracker(['magenta']);
-
+  var colors = new tracking.ColorTracker(['cyan']);
+  var atual_x=620//valor inicial da esquerda
   colors.on('track', function(event) {
+   
     if (event.data.length === 0) {
       // No colors were detected in this frame.
     } else {
       event.data.forEach(function(rect) {
+        if(rect.x<atual_x){ //se o valor que aparecer for mais pequeno que o x atual, estamos a ir para a direita, pois o x vai de 600 e tal -> para 0
+          console.log("ir para a direita")
+        }else if(rect.x>atual_x){ //se o valor que aparecer for maior que o x atual estamos a ir para a esquerda pois o x vai de 600 <-0
+          console.log("ir para a esquerda")
+        }else{
+          ("igual x")
+        }
+        
+        atual_x=rect.x
+        console.log("valor atual "+ atual_x);
         console.log(rect.x, rect.y, rect.height, rect.width, rect.color);
       });
     }
