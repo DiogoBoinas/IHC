@@ -30,9 +30,8 @@ function draw() {
     for (var i = 0; i < trackingData.length; i++) { //loop through each of the detected colors
       // console.log( trackingData[i] )
       rect(trackingData[i].x,trackingData[i].y,trackingData[i].width,trackingData[i].height)
-      total_side_movement -= trackingData[i].y
-      total_side_movement += trackingData[i].y
-      console.log(total_side_movement)
+      console.log(trackingData[i].y)
+      //console.log(total_side_movement)
     }
   }
 }
