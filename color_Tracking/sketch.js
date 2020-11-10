@@ -23,16 +23,17 @@ function setup() {
 }
 
 function draw() {
-
+  //x varia entre 0 esquerda e ~460 direita
+  //y varia entr e 0 cima e ~270 baixo
+  
   // console.log(trackingData);
   total_side_movement = 0
   if(trackingData){ //if there is tracking data to look at, then...
     for (var i = 0; i < trackingData.length; i++) { //loop through each of the detected colors
       // console.log( trackingData[i] )
       rect(trackingData[i].x,trackingData[i].y,trackingData[i].width,trackingData[i].height)
-      total_side_movement -= trackingData[i].y
-      total_side_movement += trackingData[i].y
-      console.log(total_side_movement)
+      console.log(trackingData[i].x)
+      console.log(trackingData[i].y)
     }
   }
 }
