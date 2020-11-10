@@ -11,7 +11,7 @@ function setup() {
   capture.id("myVideo"); //give the capture an ID so we can use it in the tracker below.
 
   // colors = new tracking.ColorTracker(['magenta', 'cyan', 'yellow']);
-    colors = new tracking.ColorTracker(['yellow']);
+    colors = new tracking.ColorTracker(['magenta']);
 
   tracking.track('#myVideo', colors); // start the tracking of the colors above on the camera in p5
 
@@ -25,10 +25,14 @@ function setup() {
 function draw() {
 
   // console.log(trackingData);
+  total_side_movement = 0
   if(trackingData){ //if there is tracking data to look at, then...
     for (var i = 0; i < trackingData.length; i++) { //loop through each of the detected colors
       // console.log( trackingData[i] )
       rect(trackingData[i].x,trackingData[i].y,trackingData[i].width,trackingData[i].height)
+      total_side_movement -= trackingData[i].y
+      total_side_movement += trackingData[i].y
+      console.log(total_side_movement)
     }
   }
 }
