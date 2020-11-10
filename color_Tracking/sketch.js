@@ -24,26 +24,21 @@ function setup() {
       console.log("Nothing")
     } else {
       event.data.forEach(function(rect) {
-        if(rect.x<atual_x){ //se o valor que aparecer for mais pequeno que o x atual, estamos a ir para a direita, pois o x vai de 600 e tal -> para 0
-          console.log("ir para a direita")
-        }else if(rect.x>atual_x){ //se o valor que aparecer for maior que o x atual estamos a ir para a esquerda pois o x vai de 600 <-0
-          console.log("ir para a esquerda")
-        }else{
-          ("igual x")
+        if(rect.x<=atual_x){ //se o valor que aparecer for mais pequeno que o x atual, estamos a ir para a direita, pois o x vai de 600 e tal -> para 0
+          console.log(moves[1])
+        }else{ //se o valor que aparecer for maior que o x atual estamos a ir para a esquerda pois o x vai de 600 <-0
+          console.log(moves[0])
         }
-        if(rect.y>atual_y){
-          console.log("ir para baixo")
-        }
-        else if(rect.y<atual_y){
-          console.log("ir para cima")
+        if(rect.y<=atual_y){
+          console.log(moves[2])
         }
         else{
-          console.log("igual a y")
+          console.log(moves[3])
         }
         atual_x=rect.x
         atual_y=rect.y
-        console.log("X: valor atual "+ atual_x);
-        console.log("Y: valor atual "+ atual_x);
+        //console.log("X: valor atual "+ atual_x);
+        //console.log("Y: valor atual "+ atual_x);
         console.log(rect.x, rect.y, rect.height, rect.width, rect.color);
       });
     }
