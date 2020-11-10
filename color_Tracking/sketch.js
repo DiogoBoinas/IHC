@@ -6,13 +6,11 @@ function setup() {
   createCanvas(windowWidth,windowHeight)
   capture = createCapture(VIDEO); //capture the webcam
   //capture.position(0,0) //move the capture to the top left
-  //capture.style('opacity',0.5)// use this to hide the capture later on (change to 0 to hide)...
+  capture.style('opacity',0.5)// use this to hide the capture later on (change to 0 to hide)...
   //capture.id("myVideo"); //give the capture an ID so we can use it in the tracker below.
   capture.id("cap")
   capture.hide()
   
-  colors = new tracking.ColorTracker(['magenta']);
-  tracker("#cap",colors)
 }
 
 function tracker(id ,colors) {
@@ -27,11 +25,15 @@ function draw() {
   //x varia entre 0 esquerda e ~618 direita
   //y varia entr e 0 cima e ~458 baixo
 
-  // console.log(trackingData);
+  colors = new tracking.ColorTracker(['magenta']);
+
+  console.log(trackingData);
   translate(capture.width, 0);
   scale(-1, 1);
+  tracker("#cap",colors)
   image(capture, 0, 0);
 
+  
 
   total_side_movement = 0
 
@@ -40,13 +42,13 @@ function draw() {
       // console.log( trackingData[i] )
       rect(trackingData[i].x,trackingData[i].y,trackingData[i].width,trackingData[i].height)
      
-      //console.log(max(trackingData[i].x)
+      console.log(trackingData[i].x)
       //console.log(max(trackingData[i].y,total_side_movement))
       total_side_movement = 0
 
     }
-    console.log(trackingData[0])
-    console.log(trackingData[-1])
+    //console.log(trackingData[0])
+    //console.log(trackingData[-1])
   }
   
 
