@@ -13,8 +13,11 @@ function setup() {
 
   y_moves = 0;
   xmoveatual =0;
+  ymoveatual=0;
   nummovs_d=0;
   nummovs_e=0;
+  nummovs_c=0;
+  nummovs_b=0;
   x_moves = 0;
   var atual_x=620//valor inicial da esquerda
   var atual_y=0
@@ -40,7 +43,7 @@ function setup() {
             nummovs_e--;
           }
 
-        }else {
+        }else if(rect.x >xmoveatual) {
           console.log("ESQUERDA")
           nummovs_e++;
           console.log(nummovs_e)
@@ -52,8 +55,34 @@ function setup() {
           if(nummovs_d>0){
             nummovs_d--;
           }
+        }else if(rect.y<ymoveatual){
+          console.log("CIMA")
+          nummovs_c++;
+          console.log(nummovs_c)
+          if(nummovs_c==2){
+            console.log("MOVIMENTO PARA CIMA COM SUCESSO")
+            nummovs_c=0;
+          }
+
+          if(nummovs_c>0){
+            nummovs_c--;
+          }
+
+        }else if(rect.y >ymoveatual) {
+          console.log("BAIXO")
+          nummovs_b++;
+          console.log(nummovs_b)
+          if(nummovs_b=2){
+            console.log("MOVIMENTO PARA BAIXO COM SUCESSO")
+            nummovs_b=0;
+          }
+
+          if(nummovs_b>0){
+            nummovs_b--;
+          }
         }
         xmoveatual=rect.x;
+        ymoveatual=rect.y;
         //if(rect.x<=atual_x){ //se o valor que aparecer for mais pequeno que o x atual, estamos a ir para a direita, pois o x vai de 600 e tal -> para 0
           //console.log(moves[1])
         //}else{ //se o valor que aparecer for maior que o x atual estamos a ir para a esquerda pois o x vai de 600 <-0
