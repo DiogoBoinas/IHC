@@ -18,7 +18,7 @@ function setup() {
   x_moves = 0;
   var atual_x=620//valor inicial da esquerda
   var atual_y=0
-  var colors = new tracking.ColorTracker(['cyan']);
+  var colors = new tracking.ColorTracker(['magenta']);
 
   colors.on('track', function(event) {
 
@@ -27,7 +27,7 @@ function setup() {
       console.log("Nothing")
     } else {
       event.data.forEach(function(rect) {
-        if(rect.x<(xmoveatual+5)){
+        if(rect.x<xmoveatual){
           console.log("DIREITA")
           nummovs_d++;
           console.log(nummovs_d)
