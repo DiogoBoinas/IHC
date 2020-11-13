@@ -13,6 +13,7 @@ function setup() {
 
   y_moves = 0;
   xmoveatual =0;
+  nummovs=0;
   x_moves = 0;
   var atual_x=620//valor inicial da esquerda
   var atual_y=0
@@ -25,16 +26,20 @@ function setup() {
       console.log("Nothing")
     } else {
       event.data.forEach(function(rect) {
-        console.log("Move to the Right")
-        xmoveatual=rect.x;
-        console.log(xmoveatual)
-        while(rect.x>=xmoveatual){
-          console.log(rect.x)
-          if(rect.x<=xmoveatual){
-            console.log(moves[1])
+        if(rect.x<xmoveatual){
+          console.log("DIREITA")
+          nummovs++;
+          console.log(nummovs)
+          if(nummovs==5){
+            console.log("MOVIMENTO PARA A DIREITA COM SUCESSO")
+            nummovs=0;
+          }
+        }else{
+          if(nummovs>0){
+            nummovs--;
           }
         }
-        console.log("MOVIMENTO EFETUADO COM SUCESSO!!!!")
+        xmoveatual=rect.x;
         //if(rect.x<=atual_x){ //se o valor que aparecer for mais pequeno que o x atual, estamos a ir para a direita, pois o x vai de 600 e tal -> para 0
           //console.log(moves[1])
         //}else{ //se o valor que aparecer for maior que o x atual estamos a ir para a esquerda pois o x vai de 600 <-0
@@ -50,7 +55,7 @@ function setup() {
         atual_y=rect.y
         //console.log("X: valor atual "+ atual_x);
         //console.log("Y: valor atual "+ atual_x);
-        console.log(rect.x, rect.y, rect.height, rect.width, rect.color);
+        //console.log(rect.x, rect.y, rect.height, rect.width, rect.color);
       });
     }
   });
