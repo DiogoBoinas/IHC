@@ -13,11 +13,12 @@ function setup() {
 
   y_moves = 0;
   xmoveatual =0;
-  nummovs=0;
+  nummovs_d=0;
+  nummovs_e=0;
   x_moves = 0;
   var atual_x=620//valor inicial da esquerda
   var atual_y=0
-  var colors = new tracking.ColorTracker(['magenta']);
+  var colors = new tracking.ColorTracker(['cyan']);
 
   colors.on('track', function(event) {
 
@@ -26,17 +27,30 @@ function setup() {
       console.log("Nothing")
     } else {
       event.data.forEach(function(rect) {
-        if(rect.x<xmoveatual){
+        if(rect.x<(xmoveatual+5)){
           console.log("DIREITA")
-          nummovs++;
-          console.log(nummovs)
-          if(nummovs==5){
+          nummovs_d++;
+          console.log(nummovs_d)
+          if(nummovs_d==5){
             console.log("MOVIMENTO PARA A DIREITA COM SUCESSO")
-            nummovs=0;
+            nummovs_d=0;
           }
-        }else{
-          if(nummovs>0){
-            nummovs--;
+
+          if(nummovs_e>0){
+            nummovs_e--;
+          }
+
+        }else {
+          console.log("ESQUERDA")
+          nummovs_e++;
+          console.log(nummovs_e)
+          if(nummovs_e==5){
+            console.log("MOVIMENTO PARA A ESQUERDA COM SUCESSO")
+            nummovs_e=0;
+          }
+
+          if(nummovs_d>0){
+            nummovs_d--;
           }
         }
         xmoveatual=rect.x;
