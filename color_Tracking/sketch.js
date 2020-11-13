@@ -8,33 +8,44 @@ function setup() {
 
   capture = createCapture(VIDEO); //capture the webcam
   capture.id("cap")
-  
+
   let moves = ['left','right','up','down']
 
   y_moves = 0;
+  xmoveatual =0;
   x_moves = 0;
   var atual_x=620//valor inicial da esquerda
-  var atual_y=0 
-  var colors = new tracking.ColorTracker(['cyan']);
+  var atual_y=0
+  var colors = new tracking.ColorTracker(['magenta']);
 
   colors.on('track', function(event) {
-   
+
     if (event.data.length === 0) {
       // No colors were detected in this frame.
       console.log("Nothing")
     } else {
       event.data.forEach(function(rect) {
-        if(rect.x<=atual_x){ //se o valor que aparecer for mais pequeno que o x atual, estamos a ir para a direita, pois o x vai de 600 e tal -> para 0
-          console.log(moves[1])
-        }else{ //se o valor que aparecer for maior que o x atual estamos a ir para a esquerda pois o x vai de 600 <-0
-          console.log(moves[0])
+        console.log("Move to the Right")
+        xmoveatual=rect.x;
+        console.log(xmoveatual)
+        while(rect.x>=xmoveatual){
+          console.log(rect.x)
+          if(rect.x<=xmoveatual){
+            console.log(moves[1])
+          }
         }
-        if(rect.y<=atual_y){
-          console.log(moves[2])
-        }
-        else{
-          console.log(moves[3])
-        }
+        console.log("MOVIMENTO EFETUADO COM SUCESSO!!!!")
+        //if(rect.x<=atual_x){ //se o valor que aparecer for mais pequeno que o x atual, estamos a ir para a direita, pois o x vai de 600 e tal -> para 0
+          //console.log(moves[1])
+        //}else{ //se o valor que aparecer for maior que o x atual estamos a ir para a esquerda pois o x vai de 600 <-0
+          //console.log(moves[0])
+        //}
+        //if(rect.y<=atual_y){
+          //console.log(moves[2])
+        //}
+        //else{
+          //console.log(moves[3])
+        //}
         atual_x=rect.x
         atual_y=rect.y
         //console.log("X: valor atual "+ atual_x);
