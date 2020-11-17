@@ -10,6 +10,27 @@ function setup() {
   capture.id("cap")
 
   let moves = ['left','right','up','down']
+ 
+  //ve quantos moviemntos pode criar de acordo com o tamanho de moves que existem
+  let n_movimentos= Math.floor(Math.random() * moves.length) + 1;
+  console.log("executar ")
+  console.log(n_movimentos)
+  console.log("movimentos")
+
+  var i;
+  let movimentos_executar=[]
+
+  //vai utilizar outro gerador para escolher n_movimentos numa sequencia random
+  for (i = 0; i < n_movimentos; i++) {
+    x=Math.floor(Math.random() * n_movimentos)
+    while(movimentos_executar.includes(moves[x])){
+      x=Math.floor(Math.random() * n_movimentos) //nao existir moves repetidos
+    }
+    movimentos_executar.push(moves[x])
+  }
+
+  console.log("movimentos gerados")
+  console.log(movimentos_executar)
 
   y_moves = 0;
   xmoveatual =0;
