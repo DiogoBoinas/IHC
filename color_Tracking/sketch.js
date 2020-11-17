@@ -21,7 +21,7 @@ function setup() {
   x_moves = 0;
   var atual_x=620//valor inicial da esquerda
   var atual_y=0
-  var colors = new tracking.ColorTracker(['magenta']);
+  var colors = new tracking.ColorTracker(['cyan']);
 
   colors.on('track', function(event) {
 
@@ -64,8 +64,8 @@ function setup() {
             nummovs_c=0;
           }
 
-          if(nummovs_c>0){
-            nummovs_c--;
+          if(nummovs_b>0){
+            nummovs_b--;
           }
 
         }else if(rect.y >ymoveatual) {
@@ -77,8 +77,8 @@ function setup() {
             nummovs_b=0;
           }
 
-          if(nummovs_b>0){
-            nummovs_b--;
+          if(nummovs_c>0){
+            nummovs_c--;
           }
         }
         xmoveatual=rect.x;
