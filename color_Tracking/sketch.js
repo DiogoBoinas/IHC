@@ -49,6 +49,8 @@ function setup() {
   var atual_y=0
   var colors = new tracking.ColorTracker(['cyan']);
 
+  var movimento_atual=0;
+
   colors.on('track', function(event) {
 
     if (event.data.length === 0) {
@@ -89,6 +91,10 @@ function setup() {
           if(nummovs_d==5){
             console.log("MOVIMENTO PARA A DIREITA COM SUCESSO")
             nummovs_d=0;
+
+            if(movimentos_executar[movimento_atual]==moves[1])
+              movimento_atual++
+            
           }
 
           if(nummovs_e>0){
@@ -133,6 +139,9 @@ function setup() {
           if(nummovs_e==5){
             console.log("MOVIMENTO PARA A ESQUERDA COM SUCESSO")
             nummovs_e=0;
+
+            if(movimentos_executar[movimento_atual]==moves[0])
+              movimento_atual++
           }
 
           if(nummovs_d>0){
@@ -171,6 +180,8 @@ function setup() {
           if(nummovs_c==2){
             console.log("MOVIMENTO PARA CIMA COM SUCESSO")
             nummovs_c=0;
+            if(movimentos_executar[movimento_atual]==moves[2])
+              movimento_atual++
           }
 
           if(nummovs_b>0){
@@ -213,6 +224,8 @@ function setup() {
           if(nummovs_b=2){
             console.log("MOVIMENTO PARA BAIXO COM SUCESSO")
             nummovs_b=0;
+            if(movimentos_executar[movimento_atual]==moves[3])
+              movimento_atual++
           }
 
           if(nummovs_c>0){
@@ -222,19 +235,33 @@ function setup() {
         if(nummovs_d_c==3){
           console.log("MOVIMENTO PARA A Diagoal DIREITA Subir COM SUCESSO")
           nummovs_d_c=0
+          if(movimentos_executar[movimento_atual]==moves[6])
+              movimento_atual++
         }
         if(nummovs_d_b==3){
           console.log("MOVIMENTO PARA A Diagoal DIREITA Descer COM SUCESSO")
           nummovs_d_b=0
+          if(movimentos_executar[movimento_atual]==moves[4])
+              movimento_atual++
         }
         if(nummovs_e_c==3){
           console.log("MOVIMENTO PARA A Diagoal Esquerda Subir COM SUCESSO")
           nummovs_e_c=0
+          if(movimentos_executar[movimento_atual]==moves[7])
+              movimento_atual++
         }
         if(nummovs_e_b==3){
           console.log("MOVIMENTO PARA A Diagoal Esquerda Descer COM SUCESSO")
           nummovs_e_b=0
+          if(movimentos_executar[movimento_atual]==moves[5])
+              movimento_atual++
         }
+
+        if(movimento_atual>=n_movimentos){
+          console.log("CONSEGUIU COMPLETAR O DESAFIO")
+        }
+        console.log("estamos na posiçao do array completo: "+movimento_atual)
+
         xmoveatual=rect.x;
         ymoveatual=rect.y;
     
