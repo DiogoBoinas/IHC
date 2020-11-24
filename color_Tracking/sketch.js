@@ -52,6 +52,12 @@ function setup() {
     } else {
       event.data.forEach(function(rect) {
         if(rect.x<xmoveatual){
+          if(rect.y<ymoveatual){
+            console.log("diagonal para a direita -subindo")
+          }
+          if(rect.y>ymoveatual){
+            console.log("diagonal para a direita -descendo")
+          }
           console.log("DIREITA")
           nummovs_d++;
           console.log(nummovs_d)
@@ -65,6 +71,12 @@ function setup() {
           }
 
         }else if(rect.x >xmoveatual) {
+          if(rect.y<ymoveatual){
+            console.log("diagonal para a esquerda -subindo")
+          }
+          if(rect.y>ymoveatual){
+            console.log("diagonal para a esquerda -descendo")
+          }
           console.log("ESQUERDA")
           nummovs_e++;
           console.log(nummovs_e)
