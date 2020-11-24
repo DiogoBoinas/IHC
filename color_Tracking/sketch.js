@@ -9,7 +9,7 @@ function setup() {
   capture = createCapture(VIDEO); //capture the webcam
   capture.id("cap")
 
-  let moves = ['left','right','up','down']
+  let moves = ['left','right','up','down','diagonal_direita_baixo','diagonal_esquerda_baixo','diagonal_direita_cima','diagonal_esquerda_cima']
  
   //ve quantos moviemntos pode criar de acordo com o tamanho de moves que existem
   let n_movimentos= Math.floor(Math.random() * moves.length) + 1;
