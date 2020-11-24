@@ -40,6 +40,11 @@ function setup() {
   nummovs_c=0;
   nummovs_b=0;
   x_moves = 0;
+  nummovs_d_c=0;
+  nummovs_d_b=0;
+  nummovs_e_c=0;
+  nummovs_e_b=0;
+
   var atual_x=620//valor inicial da esquerda
   var atual_y=0
   var colors = new tracking.ColorTracker(['cyan']);
@@ -54,9 +59,29 @@ function setup() {
         if(rect.x<xmoveatual){
           if(rect.y<ymoveatual){
             console.log("diagonal para a direita -subindo")
+            nummovs_d_c++;
+            if(nummovs_d_b>0){
+              nummovs_d_b--
+            }
+            if(nummovs_e_c>0){
+              nummovs_e_c--
+            }
+            if(nummovs_e_b>0){
+              nummovs_e_b--
+            }
           }
           if(rect.y>ymoveatual){
             console.log("diagonal para a direita -descendo")
+            nummovs_d_b++
+            if(nummovs_d_c>0){
+              nummovs_d_c--
+            }
+            if(nummovs_e_c>0){
+              nummovs_e_c--
+            }
+            if(nummovs_e_b>0){
+              nummovs_e_b--
+            }
           }
           console.log("DIREITA")
           nummovs_d++;
@@ -70,12 +95,37 @@ function setup() {
             nummovs_e--;
           }
 
+         
+
         }else if(rect.x >xmoveatual) {
           if(rect.y<ymoveatual){
             console.log("diagonal para a esquerda -subindo")
+            nummovs_e_c++
+
+            if(nummovs_d_c>0){
+              nummovs_d_c--
+            }
+            if(nummovs_d_b>0){
+              nummovs_d_b--
+            }
+            if(nummovs_e_b>0){
+              nummovs_e_b--
+            }
           }
           if(rect.y>ymoveatual){
             console.log("diagonal para a esquerda -descendo")
+            nummovs_e_b++
+
+            if(nummovs_d_c>0){
+              nummovs_d_c--
+            }
+            if(nummovs_d_b>0){
+              nummovs_d_b--
+            }
+            if(nummovs_e_c>0){
+              nummovs_e_c--
+            }
+
           }
           console.log("ESQUERDA")
           nummovs_e++;
@@ -89,6 +139,32 @@ function setup() {
             nummovs_d--;
           }
         }else if(rect.y<ymoveatual){
+          if(rect.x<xmoveatual){
+            console.log("diagonal para a direita -subindo")
+            nummovs_d_c++
+            if(nummovs_d_b>0){
+              nummovs_d_b--
+            }
+            if(nummovs_e_c>0){
+              nummovs_e_c--
+            }
+            if(nummovs_e_b>0){
+              nummovs_e_b--
+            }
+          }
+          if(rect.x>xmoveatual){
+            console.log("diagonal para a esquerda -subindo")
+            nummovs_e_c++
+            if(nummovs_d_c>0){
+              nummovs_d_c--
+            }
+            if(nummovs_e_c>0){
+              nummovs_e_c--
+            }
+            if(nummovs_e_b>0){
+              nummovs_e_b--
+            }
+          }
           console.log("CIMA")
           nummovs_c++;
           console.log(nummovs_c)
@@ -102,6 +178,35 @@ function setup() {
           }
 
         }else if(rect.y >ymoveatual) {
+          if(rect.x<xmoveatual){
+            console.log("diagonal para a direita -descendo")
+            nummovs_d_b++
+            
+            if(nummovs_d_c>0){
+              nummovs_d_c--
+            }
+            if(nummovs_d_b>0){
+              nummovs_d_b--
+            }
+            if(nummovs_e_b>0){
+              nummovs_e_b--
+            }
+          }
+          if(rect.x>xmoveatual){
+            console.log("diagonal para a esquerda -descendo")
+            nummovs_e_b++
+
+            if(nummovs_d_c>0){
+              nummovs_d_c--
+            }
+            if(nummovs_d_b>0){
+              nummovs_d_b--
+            }
+            if(nummovs_e_c>0){
+              nummovs_e_c--
+            }
+
+          }
           console.log("BAIXO")
           nummovs_b++;
           console.log(nummovs_b)
@@ -114,24 +219,28 @@ function setup() {
             nummovs_c--;
           }
         }
+        if(nummovs_d_c==3){
+          console.log("MOVIMENTO PARA A Diagoal DIREITA Subir COM SUCESSO")
+          nummovs_d_c=0
+        }
+        if(nummovs_d_b==3){
+          console.log("MOVIMENTO PARA A Diagoal DIREITA Descer COM SUCESSO")
+          nummovs_d_b=0
+        }
+        if(nummovs_e_c==3){
+          console.log("MOVIMENTO PARA A Diagoal Esquerda Subir COM SUCESSO")
+          nummovs_e_c=0
+        }
+        if(nummovs_e_b==3){
+          console.log("MOVIMENTO PARA A Diagoal Esquerda Descer COM SUCESSO")
+          nummovs_e_b=0
+        }
         xmoveatual=rect.x;
         ymoveatual=rect.y;
-        //if(rect.x<=atual_x){ //se o valor que aparecer for mais pequeno que o x atual, estamos a ir para a direita, pois o x vai de 600 e tal -> para 0
-          //console.log(moves[1])
-        //}else{ //se o valor que aparecer for maior que o x atual estamos a ir para a esquerda pois o x vai de 600 <-0
-          //console.log(moves[0])
-        //}
-        //if(rect.y<=atual_y){
-          //console.log(moves[2])
-        //}
-        //else{
-          //console.log(moves[3])
-        //}
+    
         atual_x=rect.x
         atual_y=rect.y
-        //console.log("X: valor atual "+ atual_x);
-        //console.log("Y: valor atual "+ atual_x);
-        //console.log(rect.x, rect.y, rect.height, rect.width, rect.color);
+       
       });
     }
   });
