@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>O Feiticeiro de Oz</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="jquery-3.5.1.min.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+
+<div class="page" id="landing">
+    <div class="block" id="main">
+        <h1 class="title">O Feiticeiro <br>de Oz</h1>
+        <span id="iniciar">Iniciar</span>
+        <br>
+        <span id="sobre" onclick="loadAbout()">Sobre</span>
+    </div>
+    <div id="buttons">
+
+    </div>
+    <img src="emerald-city.jpg" class="background">
+
+</div>
+
+<div class="page" id="about">
+    <div class="block" id="second">
+    <h1 class="title">Sobre</h1>
+    <p>teste</p>
+        <span id="voltar" onclick="voltar('about')">Voltar</span>
+    </div>
+
+    <img src="Wizard_of_OZ_Emerald_City.jpg" class="background">
+</div>
+
+<div class="page" id="settings">
+    <div class="block" id="third">
+        <h1 class="title">Definições</h1>
+        <p>teste</p>
+        <span id="voltar" onclick="voltar('settings')">Voltar</span>
+    </div>
+
+    <img src="Wizard_of_OZ_Emerald_City.jpg" class="background">
+</div>
+
+<script src="tilt.jquery.js"></script>
+
+</body>
+</html>
