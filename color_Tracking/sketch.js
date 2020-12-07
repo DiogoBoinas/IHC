@@ -15,7 +15,7 @@ function setup() {
   capture.id("cap")
 
   let moves = ['left','right','up','down','downright','downleft','upright','upleft']
- 
+
   //ve quantos moviemntos pode criar de acordo com o tamanho de moves que existem
   let n_movimentos= Math.floor(Math.random() * moves.length) + 1;
   console.log("executar ")
@@ -34,31 +34,7 @@ function setup() {
     movimentos_executar.push(moves[x])
   }
 
-
-  if(movimentos_executar[0]=='left'){
-    img = loadImage('../arrows/left.png');
-  }
-  if(movimentos_executar[0]=='right'){
-    img = loadImage('../arrows/right.png');
-  }
-  if(movimentos_executar[0]=='up'){
-    img = loadImage('../arrows/up.png');
-  }
-  if(movimentos_executar[0]=='down'){
-    img = loadImage('../arrows/down.png');
-  }
-  if(movimentos_executar[0]=='downright'){
-    img = loadImage('../arrows/downright.png');
-  }
-  if(movimentos_executar[0]=='downleft'){
-    img = loadImage('../arrows/downleft.png');
-  }
-  if(movimentos_executar[0]=='upright'){
-    img = loadImage('../arrows/upright.png');
-  }
-  if(movimentos_executar[0]=='upleft'){
-    img = loadImage('../arrows/upleft.png');
-  }
+  img = loadImage('../arrows/'+movimentos_executar[0]+'.png');
 
   console.log("movimentos gerados")
   console.log(movimentos_executar)
@@ -123,18 +99,18 @@ function setup() {
             console.log("MOVIMENTO PARA A DIREITA COM SUCESSO")
             nummovs_d=0;
 
-            if(movimentos_executar[movimento_atual]==moves[1])
-              clear()
-              movimento_atual++
+            if(movimentos_executar[movimento_atual]==moves[1]){
+              clear();
+              movimento_atual++;
               img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
-            
+            }
           }
 
           if(nummovs_e>0){
             nummovs_e--;
           }
 
-         
+
 
         }else if(rect.x >xmoveatual) {
           if(rect.y<ymoveatual){
@@ -173,10 +149,11 @@ function setup() {
             console.log("MOVIMENTO PARA A ESQUERDA COM SUCESSO")
             nummovs_e=0;
 
-            if(movimentos_executar[movimento_atual]==moves[0])
-              clear() 
-              movimento_atual++
+            if(movimentos_executar[movimento_atual]==moves[0]){
+              clear();
+              movimento_atual++;
               img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
+            }
           }
 
           if(nummovs_d>0){
@@ -215,10 +192,11 @@ function setup() {
           if(nummovs_c==2){
             console.log("MOVIMENTO PARA CIMA COM SUCESSO")
             nummovs_c=0;
-            if(movimentos_executar[movimento_atual]==moves[2])
-              clear()
-              movimento_atual++
+            if(movimentos_executar[movimento_atual]==moves[2]){
+              clear();
+              movimento_atual++;
               img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
+            }
           }
 
           if(nummovs_b>0){
@@ -229,7 +207,7 @@ function setup() {
           if(rect.x<xmoveatual){
             console.log("diagonal para a direita -descendo")
             nummovs_d_b++
-            
+
             if(nummovs_d_c>0){
               nummovs_d_c--
             }
@@ -261,10 +239,11 @@ function setup() {
           if(nummovs_b=2){
             console.log("MOVIMENTO PARA BAIXO COM SUCESSO")
             nummovs_b=0;
-            if(movimentos_executar[movimento_atual]==moves[3])
-              clear()
-              movimento_atual++
+            if(movimentos_executar[movimento_atual]==moves[3]){
+              clear();
+              movimento_atual++;
               img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
+            }
           }
 
           if(nummovs_c>0){
@@ -274,47 +253,53 @@ function setup() {
         if(nummovs_d_c==3){
           console.log("MOVIMENTO PARA A Diagoal DIREITA Subir COM SUCESSO")
           nummovs_d_c=0
-          if(movimentos_executar[movimento_atual]==moves[6])
-              clear()
-              movimento_atual++
+          if(movimentos_executar[movimento_atual]==moves[6]){
+              clear();
+              movimento_atual++;
               img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
+          }
         }
         if(nummovs_d_b==3){
           console.log("MOVIMENTO PARA A Diagoal DIREITA Descer COM SUCESSO")
           nummovs_d_b=0
-          if(movimentos_executar[movimento_atual]==moves[4])
-              clear()
-              movimento_atual++
+          if(movimentos_executar[movimento_atual]==moves[4]){
+              clear();
+              movimento_atual++;
               img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
+          }
         }
         if(nummovs_e_c==3){
           console.log("MOVIMENTO PARA A Diagoal Esquerda Subir COM SUCESSO")
           nummovs_e_c=0
-          if(movimentos_executar[movimento_atual]==moves[7])
-              clear()
-              movimento_atual++
+          if(movimentos_executar[movimento_atual]==moves[7]){
+              clear();
+              movimento_atual++;
               img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
+          }
         }
         if(nummovs_e_b==3){
           console.log("MOVIMENTO PARA A Diagoal Esquerda Descer COM SUCESSO")
           nummovs_e_b=0
-          if(movimentos_executar[movimento_atual]==moves[5])
-              clear()
-              movimento_atual++
+          if(movimentos_executar[movimento_atual]==moves[5]){
+              clear();
+              movimento_atual++;
               img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
+          }
         }
 
         if(movimento_atual>=n_movimentos){
+          clear();
           console.log("CONSEGUIU COMPLETAR O DESAFIO")
+          img = loadImage("../tick.png");
         }
         console.log("estamos na posiçao do array completo: "+movimento_atual)
 
         xmoveatual=rect.x;
         ymoveatual=rect.y;
-    
+
         atual_x=rect.x
         atual_y=rect.y
-       
+
       });
     }
   });
