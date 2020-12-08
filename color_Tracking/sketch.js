@@ -3,9 +3,12 @@ var capture;
 var trackingData;
 let img;
 let img1;
-
-
-
+let interaction = 0;
+let interacting = false;
+let n_movimentos;
+let movimentos_executar=[];
+var movimento_atual=0;
+let moves = ['left','right','up','down','downright','downleft','upright','upleft']
 
 function setup() {
 
@@ -14,17 +17,8 @@ function setup() {
   capture = createCapture(VIDEO); //capture the webcam
   capture.id("cap")
 
-  let moves = ['left','right','up','down','downright','downleft','upright','upleft']
-
-  //ve quantos moviemntos pode criar de acordo com o tamanho de moves que existem
-  let n_movimentos= Math.floor(Math.random() * moves.length) + 1;
-  console.log("executar ")
-  console.log(n_movimentos)
-  console.log("movimentos")
-
-  var i;
-  let movimentos_executar=[]
-
+  anim = createVideo(['video.mp4']);
+  n_movimentos= Math.floor(Math.random() * moves.length) + 1;
   //vai utilizar outro gerador para escolher n_movimentos numa sequencia random
   for (i = 0; i < n_movimentos; i++) {
     x=Math.floor(Math.random() * n_movimentos)
@@ -34,10 +28,72 @@ function setup() {
     movimentos_executar.push(moves[x])
   }
 
+  generateAndDetect();
+
+}
+
+function startVideo(){
+  anim.play();
+}
+
+
+function draw() {
+  //x varia entre 0 esquerda e ~618 direita
+  //y varia entr e 0 cima e ~458 baixo
+
+
+  total_side_movement = 0
+  translate(capture.width, 0);
+  scale(-1, 1)
+  tint(255, 126);
+  vid = image(capture, 0 , 0);
+
+  image(anim,0,0);
+
+
+  if (anim.time() >= 5 && interaction === 0) {
+    anim.pause();
+    interaction++;
+    interacting=true;
+  } else if (anim.time() >= 10 && interaction === 1){
+     anim.pause();
+     interaction++;
+     interacting=true;
+  } else if (anim.time() >= 15 && interaction === 2){
+    anim.pause();
+    interaction++;
+    interacting=true;
+  }else if (anim.time() >= 20 && interaction === 3){
+    anim.pause();
+    interaction++;
+    interacting=true;
+  }else if (anim.time() >= 25 && interaction === 4){
+    anim.pause();
+    interaction++;
+    interacting=true;
+  }
+
+  if (interacting===true){
+    image(img, 0,height/2,img.width/2,img.height/2);
+  }
+}
+
+function generateAndDetect(){
+
+
+  //ve quantos moviemntos pode criar de acordo com o tamanho de moves que existem
+  console.log("executar ")
+  console.log(n_movimentos)
+  console.log("movimentos")
+
+  var i;
+
+
+
   img = loadImage('../arrows/'+movimentos_executar[0]+'.png');
 
-  console.log("movimentos gerados")
-  console.log(movimentos_executar)
+  console.log("movimentos gerados");
+  console.log(movimentos_executar);
 
   y_moves = 0;
   xmoveatual =0;
@@ -56,13 +112,13 @@ function setup() {
   var atual_y=0
   var colors = new tracking.ColorTracker(['cyan']);
 
-  var movimento_atual=0;
+
 
   colors.on('track', function(event) {
 
     if (event.data.length === 0) {
       // No colors were detected in this frame.
-      console.log("Nothing")
+      //console.log("Nothing")
     } else {
       event.data.forEach(function(rect) {
         if(rect.x<xmoveatual){
@@ -254,43 +310,44 @@ function setup() {
           console.log("MOVIMENTO PARA A Diagoal DIREITA Subir COM SUCESSO")
           nummovs_d_c=0
           if(movimentos_executar[movimento_atual]==moves[6]){
-              clear();
-              movimento_atual++;
-              img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
+            clear();
+            movimento_atual++;
+            img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
           }
         }
         if(nummovs_d_b==3){
           console.log("MOVIMENTO PARA A Diagoal DIREITA Descer COM SUCESSO")
           nummovs_d_b=0
           if(movimentos_executar[movimento_atual]==moves[4]){
-              clear();
-              movimento_atual++;
-              img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
+            clear();
+            movimento_atual++;
+            img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
           }
         }
         if(nummovs_e_c==3){
           console.log("MOVIMENTO PARA A Diagoal Esquerda Subir COM SUCESSO")
           nummovs_e_c=0
           if(movimentos_executar[movimento_atual]==moves[7]){
-              clear();
-              movimento_atual++;
-              img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
+            clear();
+            movimento_atual++;
+            img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
           }
         }
         if(nummovs_e_b==3){
           console.log("MOVIMENTO PARA A Diagoal Esquerda Descer COM SUCESSO")
           nummovs_e_b=0
           if(movimentos_executar[movimento_atual]==moves[5]){
-              clear();
-              movimento_atual++;
-              img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
+            clear();
+            movimento_atual++;
+            img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
           }
         }
 
         if(movimento_atual>=n_movimentos){
           clear();
           console.log("CONSEGUIU COMPLETAR O DESAFIO")
-          img = loadImage("../tick.png");
+          // img = loadImage("../tick.png");
+          sucessfulInteraction();
         }
         console.log("estamos na posiçao do array completo: "+movimento_atual)
 
@@ -307,17 +364,21 @@ function setup() {
   tracking.track('#cap', colors);
 }
 
+function sucessfulInteraction(){
+  anim.play();
+  interacting=false;
+  n_movimentos= Math.floor(Math.random() * moves.length) + 1;
+  movimentos_executar=[];
+  for (i = 0; i < n_movimentos; i++) {
+    x=Math.floor(Math.random() * n_movimentos)
+    while(movimentos_executar.includes(moves[x])){
+      x=Math.floor(Math.random() * n_movimentos) //nao existir moves repetidos
+    }
+    movimentos_executar.push(moves[x])
+  }
+  movimento_atual=0;
 
-function draw() {
-  //x varia entre 0 esquerda e ~618 direita
-  //y varia entr e 0 cima e ~458 baixo
-
-  image(img, 0,height/2,img.width/2,img.height/2);
-  total_side_movement = 0
-  translate(capture.width, 0);
-  scale(-1, 1)
-  tint(255, 126);
-  vid = image(capture, 0 , 0);
-
+  console.log(n_movimentos);
+  console.log(movimentos_executar);
 
 }
