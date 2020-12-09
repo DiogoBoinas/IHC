@@ -73,3 +73,8 @@ span{
 #settings{
     display: none;
 }
+
+a{
+    text-decoration: none;
+    color:gold;
+}

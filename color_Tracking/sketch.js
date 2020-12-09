@@ -35,13 +35,9 @@ function setup() {
   }
 
   generateAndDetect();
-
-}
-
-function startVideo(){
   anim.play();
-}
 
+}
 
 function draw() {
   //x varia entre 0 esquerda e ~618 direita
@@ -54,7 +50,7 @@ function draw() {
   image(anim,0,0,windowW,windowH);
 
     push();
-    translate(windowW, 0);
+    translate(windowW, windowH - capture.height / 2);
     scale(-0.5, 0.5);
     //tint(255, 126);
     vid = image(capture, 0 , 0);
