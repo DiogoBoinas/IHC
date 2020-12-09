@@ -8,16 +8,22 @@ let interacting = false;
 let n_movimentos;
 let movimentos_executar=[];
 var movimento_atual=0;
-let moves = ['left','right','up','down','downright','downleft','upright','upleft']
+let moves = ['left','right','up','down','downright','downleft','upright','upleft'];
+
+let windowW;
+let windowH;
 
 function setup() {
+    windowW= windowWidth;
+    windowH= windowHeight;
 
-  createCanvas(windowWidth,windowHeight)
+  createCanvas(windowWidth,windowHeight);
 
   capture = createCapture(VIDEO); //capture the webcam
   capture.id("cap")
 
   anim = createVideo(['video.mp4']);
+  anim.hide();
   n_movimentos= Math.floor(Math.random() * moves.length) + 1;
   //vai utilizar outro gerador para escolher n_movimentos numa sequencia random
   for (i = 0; i < n_movimentos; i++) {
@@ -43,38 +49,41 @@ function draw() {
 
 
   total_side_movement = 0
-  translate(capture.width, 0);
-  scale(-1, 1)
-  tint(255, 126);
-  vid = image(capture, 0 , 0);
-
-  image(anim,0,0);
 
 
-  if (anim.time() >= 5 && interaction === 0) {
+  image(anim,0,0,windowW,windowH);
+
+    push();
+    translate(windowW, 0);
+    scale(-0.5, 0.5);
+    //tint(255, 126);
+    vid = image(capture, 0 , 0);
+    pop();
+
+  if (anim.time() >= 76 && interaction === 0) {
     anim.pause();
     interaction++;
     interacting=true;
-  } else if (anim.time() >= 10 && interaction === 1){
+  } else if (anim.time() >= 132 && interaction === 1){
      anim.pause();
      interaction++;
      interacting=true;
-  } else if (anim.time() >= 15 && interaction === 2){
+  } else if (anim.time() >= 161 && interaction === 2){
     anim.pause();
     interaction++;
     interacting=true;
-  }else if (anim.time() >= 20 && interaction === 3){
+  }else if (anim.time() >= 180 && interaction === 3){
     anim.pause();
     interaction++;
     interacting=true;
-  }else if (anim.time() >= 25 && interaction === 4){
+  }else if (anim.time() >= 219 && interaction === 4){
     anim.pause();
     interaction++;
     interacting=true;
   }
 
   if (interacting===true){
-    image(img, 0,height/2,img.width/2,img.height/2);
+    image(img, windowW/2 - img.width/2,0,img.width,img.height);
   }
 }
 
