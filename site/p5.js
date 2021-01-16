@@ -7570,7 +7570,7 @@
                 file: 'src/core/p5.Element.js',
                 line: 52,
                 description:
-                  "<p>Attaches the element to the parent specified. A way of setting\n the container for the element. Accepts either a string ID, DOM\n node, or <a href=\"#/p5.Element\">p5.Element</a>. If no arguments given, parent node is returned.\n For more ways to position the canvas, see the\n <a href='https://github.com/processing/p5.js/wiki/Positioning-your-canvas'>\n positioning the canvas</a> wiki page.\nAll above examples except for the first one require the inclusion of\n the p5.dom library in your index.html. See the\n <a href='http://p5js.org/libraries/#using-a-library'>using a library</a>\n section for information on how to include this library.</p>\n",
+                  "<p>Attaches the element to the parent specified. A way of setting\n the container for the element. Accepts either a string ID, DOM\n node, or <a href=\"#/p5.Element\">p5.Element</a>. If no arguments given, parent node is returned.\n For more ways to position the canvas, see the\n <a href='https://github.com/processing/p5.js/wiki/Positioning-your-canvas'>\n positioning the canvas</a> wiki page.\nAll above examples except for the first one require the inclusion of\n the p5.dom library in your diario.html. See the\n <a href='http://p5js.org/libraries/#using-a-library'>using a library</a>\n section for information on how to include this library.</p>\n",
                 itemtype: 'method',
                 name: 'parent',
                 chainable: 1,
@@ -55671,7 +55671,7 @@
            * positioning the canvas</a> wiki page.
            *
            * All above examples except for the first one require the inclusion of
-           * the p5.dom library in your index.html. See the
+           * the p5.dom library in your diario.html. See the
            * <a href='http://p5js.org/libraries/#using-a-library'>using a library</a>
            * section for information on how to include this library.
            *
