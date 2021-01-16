@@ -1,8 +1,8 @@
 var colors;
 var capture;
 var trackingData;
-var x_final;
-var y_final;
+var x_final=0;
+var y_final=0;
 var pagina1;
 var rato;
 var pag;
@@ -10,7 +10,11 @@ var menos=0;
 var mais=0;
 var entrar=0;
 
-function setup(){  
+
+
+function setup(){
+
+    createFile();
     createCanvas(windowWidth,windowHeight)
     capture = createCapture(VIDEO); //capture the webcam
     capture.id("cap");

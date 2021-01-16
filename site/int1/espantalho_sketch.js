@@ -17,6 +17,7 @@ let windowH;
 
 let fundo;
 let espantalho;
+let espantalho2;
 
 let timer=0;
 let timerOn=true;
@@ -69,6 +70,7 @@ function setup() {
 
   fundo=loadImage("../images/int1/espantalho/fundo.png");
   espantalho=loadImage("../images/int1/espantalho/espantalho.png");
+  espantalho2=loadImage("../images/int1/espantalho/espantalho2.png");
 
 
 }
@@ -87,13 +89,34 @@ function draw() {
       push();
       tint(255,fade1);
       image(espantalho,-125+getParallaxX(40),-125+getParallaxY(40),windowW+250,windowH+250);
-      if (fade1<255) fade1+=5;
+      if (fade1<255 && interacted===false) fade1+=5;
       pop();
   }
 
-  if (timer>500){
+  if (timer>200 && interacted===false){
       timerOn=false;
       interacting=true;
+  }
+
+  if (interacted===true){
+      push();
+      tint(255,255 - fade1);
+      image(espantalho2,-125+getParallaxX(40),-125+getParallaxY(40),windowW+250,windowH+250);
+      if (fade1>0) fade1-=30;
+      pop();
+      timerOn=true;
+  }
+
+  if (timer>500){
+
+      //txt adicionar espantalho feito
+
+      //if tiver 3 personagens
+      //window.location.replace("../diario.html");
+
+      //se ainda faltar personagens
+      window.location.replace("caminhos.html");
+
   }
 
     draw_rect();
@@ -150,7 +173,7 @@ function generateAndDetect(){
 
 
 
-  img = loadImage('../arrows/'+movimentos_executar[0]+'.png');
+  img = loadImage('../images/arrows/'+movimentos_executar[0]+'.png');
 
   console.log("movimentos gerados");
   console.log(movimentos_executar);
@@ -219,7 +242,7 @@ function generateAndDetect(){
                       if(movimentos_executar[movimento_atual]==moves[1]){
                           clear();
                           movimento_atual++;
-                          img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
+                          img = loadImage("../images/arrows/"+movimentos_executar[movimento_atual]+".png");
                       }
                   }
 
@@ -269,7 +292,7 @@ function generateAndDetect(){
                       if(movimentos_executar[movimento_atual]==moves[0]){
                           clear();
                           movimento_atual++;
-                          img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
+                          img = loadImage("../images/arrows/"+movimentos_executar[movimento_atual]+".png");
                       }
                   }
 
@@ -312,7 +335,7 @@ function generateAndDetect(){
                       if(movimentos_executar[movimento_atual]==moves[2]){
                           clear();
                           movimento_atual++;
-                          img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
+                          img = loadImage("../images/arrows/"+movimentos_executar[movimento_atual]+".png");
                       }
                   }
 
@@ -359,7 +382,7 @@ function generateAndDetect(){
                       if(movimentos_executar[movimento_atual]==moves[3]){
                           clear();
                           movimento_atual++;
-                          img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
+                          img = loadImage("../images/arrows/"+movimentos_executar[movimento_atual]+".png");
                       }
                   }
 
@@ -373,7 +396,7 @@ function generateAndDetect(){
                   if(movimentos_executar[movimento_atual]==moves[6]){
                       clear();
                       movimento_atual++;
-                      img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
+                      img = loadImage("../images/arrows/"+movimentos_executar[movimento_atual]+".png");
                   }
               }
               if(nummovs_d_b==3){
@@ -382,7 +405,7 @@ function generateAndDetect(){
                   if(movimentos_executar[movimento_atual]==moves[4]){
                       clear();
                       movimento_atual++;
-                      img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
+                      img = loadImage("../images/arrows/"+movimentos_executar[movimento_atual]+".png");
                   }
               }
               if(nummovs_e_c==3){
@@ -391,7 +414,7 @@ function generateAndDetect(){
                   if(movimentos_executar[movimento_atual]==moves[7]){
                       clear();
                       movimento_atual++;
-                      img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
+                      img = loadImage("../images/arrows/"+movimentos_executar[movimento_atual]+".png");
                   }
               }
               if(nummovs_e_b==3){
@@ -400,7 +423,7 @@ function generateAndDetect(){
                   if(movimentos_executar[movimento_atual]==moves[5]){
                       clear();
                       movimento_atual++;
-                      img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
+                      img = loadImage("../images/arrows/"+movimentos_executar[movimento_atual]+".png");
                   }
               }
 
@@ -430,6 +453,7 @@ function generateAndDetect(){
 
 function sucessfulInteraction(){
   interacting=false;
+  interacted=true;
   n_movimentos= Math.floor(Math.random() * moves.length) + 1;
   movimentos_executar=[];
   for (i = 0; i < n_movimentos; i++) {
@@ -440,7 +464,7 @@ function sucessfulInteraction(){
     movimentos_executar.push(moves[x])
   }
   movimento_atual=0;
-  img = loadImage("../arrows/"+movimentos_executar[movimento_atual]+".png");
+  img = loadImage("../images/arrows/"+movimentos_executar[movimento_atual]+".png");
 
   console.log(n_movimentos);
   console.log(movimentos_executar);
