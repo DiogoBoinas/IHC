@@ -15,27 +15,24 @@ let moves = ['left','right','up','down','downright','downleft','upright','upleft
 let windowW;
 let windowH;
 
-let fundo;
-let espantalho;
-let espantalho2;
-let milho;
+let fundo1;
+let fundo2;
+let fundo3;
+let leao;
+let leao2;
+let leao3;
 
-let audio;
-let playing=false;
 
 let timer=0;
 let timerOn=true;
 let fade1=0;
+let fade2=0;
 let interacted=false;
-
-function preload(){
-    audio=loadSound('espantalho.mp3');
-}
+let anim=0;
 
 function setup() {
     windowW= windowWidth;
     windowH= windowHeight;
-    audio.play();
 
   createCanvas(windowWidth,windowHeight);
 
@@ -48,7 +45,6 @@ function setup() {
             console.log("Nothing")
         }else{
             event.data.forEach(function(rect) {
-
                 x = rect.x;
                 y = rect.y;
                 x_final, y_final = three_simple(capture.height, capture.width, windowHeight,windowWidth, x, y);
@@ -78,10 +74,13 @@ function setup() {
 
   generateAndDetect();
 
-  fundo=loadImage("../images/int1/espantalho/fundo.png");
-  espantalho=loadImage("../images/int1/espantalho/espantalho.png");
-  espantalho2=loadImage("../images/int1/espantalho/espantalho2.png");
-  milho=loadImage("../images/int1/espantalho/milho.png");
+  fundo1=loadImage("../images/int1/leao/fundo1.png");
+  fundo2=loadImage("../images/int1/leao/fundo2.png");
+  fundo3=loadImage("../images/int1/leao/fundo3.png");
+  leao1=loadImage("../images/int1/leao/leao1.png");
+  leao2=loadImage("../images/int1/leao/leao2.png");
+  leao3=loadImage("../images/int1/leao/leao3.png");
+  mao=loadImage("../images/int1/leao/mao.png");
 
 
 }
@@ -95,33 +94,54 @@ function draw() {
 
 
   total_side_movement = 0
-    image(fundo,-125+getParallaxX(20),-125+getParallaxY(20),windowW+250,windowH+250);
-  if (timer>100){
+    image(fundo1,-125+getParallaxX(10),-125+getParallaxY(10),windowW+250,windowH+250);
+    image(fundo2,-125+getParallaxX(25),-125+getParallaxY(40),windowW+250,windowH+250);
+  if (timer>100 && anim===0){
       push();
       tint(255,fade1);
-      image(espantalho,-125+getParallaxX(40),-125+getParallaxY(40),windowW+250,windowH+250);
-      if (fade1<255 && interacted===false) fade1+=5;
+      image(leao1,-125+getParallaxX(50),-125+getParallaxY(50),windowW+250,windowH+250);
+      if (fade1<255) fade1+=5;
       pop();
   }
 
-  if (timer>200 && interacted===false){
+  if (timer>200){
+      anim++;
+        push();
+        tint(255,255 - fade1);
+        image(leao2,-125+getParallaxX(50),-125+getParallaxY(50),windowW+250,windowH+250);
+      if (fade1>0 && interacted===false) fade1-=30;
+        pop();
+    }
+
+
+
+
+  if (timer>400 && interacted===false){
       timerOn=false;
       interacting=true;
-      audio.stop();
   }
 
   if (interacted===true){
       push();
-      tint(255,255 - fade1);
-      image(espantalho2,-125+getParallaxX(40),-125+getParallaxY(40),windowW+250,windowH+250);
-      if (fade1>0) fade1-=30;
+      tint(255,fade1);
+      image(leao3,-125+getParallaxX(45),-125+getParallaxY(50),windowW+250,windowH+250);
+      if (fade1<255) fade1+=30;
       pop();
       timerOn=true;
   }
 
-    image(milho,-125+getParallaxX(60),-125+getParallaxY(60),windowW+250,windowH+250);
+  console.log(fade1);
 
-  if (timer>500){
+    image(fundo3,-125+getParallaxX(90),-125+getParallaxY(60),windowW+250,windowH+250);
+    if (timer>300){
+        push();
+        tint(255,fade2);
+        image(mao,-125+getParallaxX(100),-125+getParallaxY(100),windowW+250,windowH+250);
+        if (fade2<255) fade2+=30;
+        pop();
+    }
+
+  /*if (timer>500){
 
       //txt adicionar espantalho feito
 
@@ -131,7 +151,7 @@ function draw() {
       //se ainda faltar personagens
       window.location.replace("caminhos.html");
 
-  }
+  }*/
 
     draw_rect();
 
@@ -482,7 +502,5 @@ function sucessfulInteraction(){
 
   console.log(n_movimentos);
   console.log(movimentos_executar);
-
-  audio.play();
 
 }

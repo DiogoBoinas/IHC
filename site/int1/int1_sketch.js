@@ -12,6 +12,8 @@ var menos=0;
 var mais=0;
 var entrar=0;
 
+let timerSelect=0;
+
 
 
 function setup(){  
@@ -32,14 +34,13 @@ function setup(){
                 //console.log(windowWidth);
                 //console.log("X Inicial:",x," Y Inicial:",y);
                 console.log("X Final:",x_final, " Y Inicial:",y_final);
-                if(x_final <= 100){
-                    if (menos<50){
-                        menos++;
-                    }else if(menos>=50){
-                        menos=0;
-                        pag--;
+                if(x_final <= (1/20)*windowW + 100 && x_final >= (1/20)*windowW){
+                    if(y_final >= (3/7)*windowH && y_final <=(3/7)*windowH+100){
+                        timerSelect++;
+                        if (timerSelect>50)  window.location.replace("espantalho.html");
                     }
-                    console.log(menos);
+                }else{
+                    timerSelect=0;
                 }
 
             });
@@ -75,7 +76,7 @@ function reversing(x_final,screen_width){
 function draw(){
     clear();
     image(caminhos,-50+getParallaxX(10),-50+getParallaxY(10),windowW+100,windowH+100);
-
+    console.log(timerSelect);
     rect((1/20)*windowW,(3/7)*windowH,100,100);
     rect((9/20)*windowW,(3/7)*windowH,100,100);
     rect((17/20)*windowW,(3/7)*windowH,100,100);
