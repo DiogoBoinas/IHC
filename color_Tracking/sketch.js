@@ -1,16 +1,23 @@
 var colors;
 var capture;
 var trackingData;
+let img;
+let img1;
+
+let windowW;
+let windowH;
+
 
 function setup() {
-
+  windowW = windowWidth;
+  windowH = windowHeight;
   createCanvas(windowWidth,windowHeight)
 
   capture = createCapture(VIDEO); //capture the webcam
   capture.id("cap")
 
-  let moves = ['left','right','up','down','diagonal_direita_baixo','diagonal_esquerda_baixo','diagonal_direita_cima','diagonal_esquerda_cima']
- 
+  let moves = ['left','right','up','down','downright','downleft','upright','upleft']
+
   //ve quantos moviemntos pode criar de acordo com o tamanho de moves que existem
   let n_movimentos= Math.floor(Math.random() * moves.length) + 1;
   console.log("executar ")
@@ -28,6 +35,8 @@ function setup() {
     }
     movimentos_executar.push(moves[x])
   }
+
+  img = loadImage('../calibrate/arrows/'+movimentos_executar[0]+'.png');
 
   console.log("movimentos gerados")
   console.log(movimentos_executar)
@@ -92,16 +101,18 @@ function setup() {
             console.log("MOVIMENTO PARA A DIREITA COM SUCESSO")
             nummovs_d=0;
 
-            if(movimentos_executar[movimento_atual]==moves[1])
-              movimento_atual++
-            
+            if(movimentos_executar[movimento_atual]==moves[1]){
+              clear();
+              movimento_atual++;
+              img = loadImage("../calibrate/arrows/"+movimentos_executar[movimento_atual]+".png");
+            }
           }
 
           if(nummovs_e>0){
             nummovs_e--;
           }
 
-         
+
 
         }else if(rect.x >xmoveatual) {
           if(rect.y<ymoveatual){
@@ -140,8 +151,11 @@ function setup() {
             console.log("MOVIMENTO PARA A ESQUERDA COM SUCESSO")
             nummovs_e=0;
 
-            if(movimentos_executar[movimento_atual]==moves[0])
-              movimento_atual++
+            if(movimentos_executar[movimento_atual]==moves[0]){
+              clear();
+              movimento_atual++;
+              img = loadImage("../calibrate/arrows/"+movimentos_executar[movimento_atual]+".png");
+            }
           }
 
           if(nummovs_d>0){
@@ -180,8 +194,11 @@ function setup() {
           if(nummovs_c==2){
             console.log("MOVIMENTO PARA CIMA COM SUCESSO")
             nummovs_c=0;
-            if(movimentos_executar[movimento_atual]==moves[2])
-              movimento_atual++
+            if(movimentos_executar[movimento_atual]==moves[2]){
+              clear();
+              movimento_atual++;
+              img = loadImage("../calibrate/arrows/"+movimentos_executar[movimento_atual]+".png");
+            }
           }
 
           if(nummovs_b>0){
@@ -192,7 +209,7 @@ function setup() {
           if(rect.x<xmoveatual){
             console.log("diagonal para a direita -descendo")
             nummovs_d_b++
-            
+
             if(nummovs_d_c>0){
               nummovs_d_c--
             }
@@ -224,8 +241,11 @@ function setup() {
           if(nummovs_b=2){
             console.log("MOVIMENTO PARA BAIXO COM SUCESSO")
             nummovs_b=0;
-            if(movimentos_executar[movimento_atual]==moves[3])
-              movimento_atual++
+            if(movimentos_executar[movimento_atual]==moves[3]){
+              clear();
+              movimento_atual++;
+              img = loadImage("../calibrate/arrows/"+movimentos_executar[movimento_atual]+".png");
+            }
           }
 
           if(nummovs_c>0){
@@ -235,39 +255,53 @@ function setup() {
         if(nummovs_d_c==3){
           console.log("MOVIMENTO PARA A Diagoal DIREITA Subir COM SUCESSO")
           nummovs_d_c=0
-          if(movimentos_executar[movimento_atual]==moves[6])
-              movimento_atual++
+          if(movimentos_executar[movimento_atual]==moves[6]){
+              clear();
+              movimento_atual++;
+              img = loadImage("../calibrate/arrows/"+movimentos_executar[movimento_atual]+".png");
+          }
         }
         if(nummovs_d_b==3){
           console.log("MOVIMENTO PARA A Diagoal DIREITA Descer COM SUCESSO")
           nummovs_d_b=0
-          if(movimentos_executar[movimento_atual]==moves[4])
-              movimento_atual++
+          if(movimentos_executar[movimento_atual]==moves[4]){
+              clear();
+              movimento_atual++;
+              img = loadImage("../calibrate/arrows/"+movimentos_executar[movimento_atual]+".png");
+          }
         }
         if(nummovs_e_c==3){
           console.log("MOVIMENTO PARA A Diagoal Esquerda Subir COM SUCESSO")
           nummovs_e_c=0
-          if(movimentos_executar[movimento_atual]==moves[7])
-              movimento_atual++
+          if(movimentos_executar[movimento_atual]==moves[7]){
+              clear();
+              movimento_atual++;
+              img = loadImage("../calibrate/arrows/"+movimentos_executar[movimento_atual]+".png");
+          }
         }
         if(nummovs_e_b==3){
           console.log("MOVIMENTO PARA A Diagoal Esquerda Descer COM SUCESSO")
           nummovs_e_b=0
-          if(movimentos_executar[movimento_atual]==moves[5])
-              movimento_atual++
+          if(movimentos_executar[movimento_atual]==moves[5]){
+              clear();
+              movimento_atual++;
+              img = loadImage("../calibrate/arrows/"+movimentos_executar[movimento_atual]+".png");
+          }
         }
 
         if(movimento_atual>=n_movimentos){
+          clear();
           console.log("CONSEGUIU COMPLETAR O DESAFIO")
+          img = loadImage("../tick.png");
         }
         console.log("estamos na posiçao do array completo: "+movimento_atual)
 
         xmoveatual=rect.x;
         ymoveatual=rect.y;
-    
+
         atual_x=rect.x
         atual_y=rect.y
-       
+
       });
     }
   });
@@ -280,10 +314,14 @@ function draw() {
   //x varia entre 0 esquerda e ~618 direita
   //y varia entr e 0 cima e ~458 baixo
 
+  image(img, width/2,height/2,img.width,img.height);
   total_side_movement = 0
-  translate(capture.width, 0);
-  scale(-1, 1)
+  push();
+  translate(windowW, windowH - capture.height / 2);
+  scale(-0.5, 0.5)
   tint(255, 126);
   vid = image(capture, 0 , 0);
+  pop();
+
 
 }
