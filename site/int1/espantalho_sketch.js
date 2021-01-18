@@ -28,6 +28,9 @@ let timerOn=true;
 let fade1=0;
 let interacted=false;
 
+let redirect=false;
+
+
 function preload(){
     audio=loadSound('espantalho.mp3');
 }
@@ -123,14 +126,10 @@ function draw() {
 
   if (timer>500){
 
-      //txt adicionar espantalho feito
-
-      //if tiver 3 personagens
-      //window.location.replace("../diario.html");
-
-      //se ainda faltar personagens
-      window.location.replace("caminhos.html");
-
+      if (redirect===false){
+          window.location.replace("caminhos.html");
+          redirect=true;
+      }
   }
 
     draw_rect();

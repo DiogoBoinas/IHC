@@ -15,12 +15,39 @@ let moves = ['left','right','up','down','downright','downleft','upright','upleft
 let windowW;
 let windowH;
 
+let selecting=false;
+let timerSelect=0;
+
 let fundo1;
-let fundo2;
-let fundo3;
-let leao;
-let leao2;
-let leao3;
+let tras1;
+let tras2;
+let tras3;
+let tras_agua;
+let meio1;
+let meio2;
+let meio3;
+let meio_agua;
+let frente1;
+let frente_agua;
+let chao1;
+let chaoagua;
+let bruxa1;
+let bruxa2;
+let bruxa3;
+let bruxa_agua;
+let lenha1;
+let lenha2;
+let lenha3;
+let pedra1;
+let pedra2;
+let pedra3;
+let agua1;
+let agua2;
+
+let objetoEscolhido;
+// 0=pedra 1=tronco 2=agua
+let anim=0;
+let startedAnimation=false;
 
 
 let timer=0;
@@ -28,9 +55,7 @@ let timerOn=true;
 let fade1=0;
 let fade2=0;
 let interacted=false;
-let anim=0;
 
-let redirect=false;
 
 function setup() {
     windowW= windowWidth;
@@ -53,14 +78,46 @@ function setup() {
                 //console.log(windowWidth);
                 //console.log("X Inicial:",x," Y Inicial:",y);
                 console.log("X Final:",x_final, " Y Inicial:",y_final);
-
+                if(x_final <= (3/20)*windowW + 200 && x_final >= (3/20)*windowW){
+                    if(y_final >= (6/8)*windowH && y_final <=(6/8)*windowH+200){
+                        selecting=true;
+                        timerSelect++;
+                        if (timerSelect>50){
+                            objetoEscolhido=0;
+                            startedAnimation=true;
+                        }
+                    }
+                }else if(x_final <= (8/20)*windowW + 200 && x_final >= (8/20)*windowW){
+                    if(y_final >= (6/8)*windowH && y_final <=(6/8)*windowH+200){
+                        selecting=true;
+                        timerSelect++;
+                        if (timerSelect>50){
+                            objetoEscolhido=1;
+                            startedAnimation=true;
+                        }
+                    }
+                }else if(x_final <= (12/20)*windowW + 200 && x_final >= (12/20)*windowW) {
+                    if (y_final >= (6 / 8) * windowH && y_final <= (6 / 8) * windowH + 200) {
+                        selecting = true;
+                        timerSelect++;
+                        if (timerSelect > 50) {
+                            objetoEscolhido = 2;
+                            startedAnimation=true;
+                        }
+                    }
+                }else{
+                    selecting=false;
+                    timerSelect=0;
+                }
 
             });
         }
     });
     tracking.track('#cap', colors);
 
-    rato=loadImage("../images/rato.png");
+
+        rato=loadImage("../images/rato.png");
+
 
 
   n_movimentos= Math.floor(Math.random() * moves.length) + 1;
@@ -76,15 +133,31 @@ function setup() {
 
   generateAndDetect();
 
-  fundo1=loadImage("../images/int1/leao/fundo1.png");
-  fundo2=loadImage("../images/int1/leao/fundo2.png");
-  fundo3=loadImage("../images/int1/leao/fundo3.png");
-  leao1=loadImage("../images/int1/leao/leao1.png");
-  leao2=loadImage("../images/int1/leao/leao2.png");
-  leao3=loadImage("../images/int1/leao/leao3.png");
-  mao=loadImage("../images/int1/leao/mao.png");
-
-
+  fundo1=loadImage("../images/int2/fundo1.png");
+  agua1=loadImage("../images/int2/agua1.png");
+  agua2=loadImage("../images/int2/agua2.png");
+  bruxa1=loadImage("../images/int2/bruxa1.png");
+  bruxa2=loadImage("../images/int2/bruxa2.png");
+  bruxa3=loadImage("../images/int2/bruxa3.png");
+  bruxa_agua=loadImage("../images/int2/bruxa_agua.png");
+  chao1=loadImage("../images/int2/chao1.png");
+  chao_agua=loadImage("../images/int2/chao_agua.png");
+  frente1=loadImage("../images/int2/frente1.png");
+  frente_agua=loadImage("../images/int2/frente_agua.png");
+  lenha1=loadImage("../images/int2/lenha1.png");
+  lenha2=loadImage("../images/int2/lenha2.png");
+  lenha3=loadImage("../images/int2/lenha3.png");
+  meio1=loadImage("../images/int2/meio1.png");
+  meio2=loadImage("../images/int2/meio2.png");
+  meio3=loadImage("../images/int2/meio3.png");
+  meio_agua=loadImage("../images/int2/meio_agua.png");
+  pedra1=loadImage("../images/int2/pedra1.png");
+  pedra2=loadImage("../images/int2/pedra2.png");
+  pedra3=loadImage("../images/int2/pedra3.png");
+  tras1=loadImage("../images/int2/tras1.png");
+  tras2=loadImage("../images/int2/tras2.png");
+  tras3=loadImage("../images/int2/tras3.png");
+  tras_agua=loadImage("../images/int2/tras_agua.png");
 }
 
 function draw() {
@@ -97,16 +170,23 @@ function draw() {
 
   total_side_movement = 0
     image(fundo1,-125+getParallaxX(10),-125+getParallaxY(10),windowW+250,windowH+250);
-    image(fundo2,-125+getParallaxX(25),-125+getParallaxY(40),windowW+250,windowH+250);
-  if (timer>100 && anim===0){
+    image(tras1,-125+getParallaxX(20),-125+getParallaxY(20),windowW+250,windowH+250);
+    image(chao1,-125+getParallaxX(30),-125+getParallaxY(30),windowW+250,windowH+250);
+    image(meio1,-125+getParallaxX(20),-125+getParallaxY(20),windowW+250,windowH+250);
+
+    if (timer>100 && anim===0){
       push();
       tint(255,fade1);
-      image(leao1,-125+getParallaxX(50),-125+getParallaxY(50),windowW+250,windowH+250);
-      if (fade1<255) fade1+=5;
+      image(bruxa1,-125+getParallaxX(50),-125+getParallaxY(50),windowW+250,windowH+250);
+      if (fade1<255){
+          fade1+=5;
+      }else{
+          timerOn=false;
+      }
       pop();
   }
 
-  if (timer>200){
+  /*if (timer>200){
       anim++;
         push();
         tint(255,255 - fade1);
@@ -114,11 +194,11 @@ function draw() {
       if (fade1>0 && interacted===false) fade1-=30;
         pop();
     }
+*/
 
 
 
-
-  if (timer>400 && interacted===false){
+  /*if (timer>400 && interacted===false){
       timerOn=false;
       interacting=true;
   }
@@ -130,29 +210,33 @@ function draw() {
       if (fade1<255) fade1+=30;
       pop();
       timerOn=true;
-  }
+  }*/
 
-  console.log(fade1);
 
-    image(fundo3,-125+getParallaxX(90),-125+getParallaxY(60),windowW+250,windowH+250);
-    if (timer>300){
+
+
+  image(frente1,-125+getParallaxX(100),-125+getParallaxY(100),windowW+250,windowH+250);
+
+    /*if (timer>300){
         push();
         tint(255,fade2);
         image(mao,-125+getParallaxX(100),-125+getParallaxY(100),windowW+250,windowH+250);
         if (fade2<255) fade2+=30;
         pop();
-    }
+    }*/
 
-  if (timer>500){
+  /*if (timer>500){
 
-      if (redirect===false){
-          window.location.replace("caminhos.html");
-          redirect=true;
-      }
+      //txt adicionar espantalho feito
 
-  }
+      //if tiver 3 personagens
+      //window.location.replace("../diario.html");
 
-    draw_rect();
+      //se ainda faltar personagens
+      window.location.replace("caminhos.html");
+
+  }*/
+
 
 
     push();
@@ -163,15 +247,24 @@ function draw() {
     pop();
 
 
+
   if (interacting===true){
     image(img, windowW/2 - img.width/2,0,img.width,img.height);
   }
+    draw_rect();
 
 }
 
 function draw_rect(){
     push();
-    image(rato,x_final,y_final,50,50);
+    if (selecting){
+        push();
+        tint(0,255,0);
+        image(rato,x_final,y_final,50,50);
+        pop();
+    }else{
+        image(rato,x_final,y_final,50,50);
+    }
 
 }
 
