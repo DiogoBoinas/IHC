@@ -22,6 +22,10 @@ let leao;
 let leao2;
 let leao3;
 
+let audio1;
+let audio2;
+let playing=false;
+
 
 let timer=0;
 let timerOn=true;
@@ -32,11 +36,19 @@ let anim=0;
 
 let redirect=false;
 
+function preload(){
+    audio1=loadSound('../audio/int1/leao1.wav');
+    audio2=loadSound('../audio/int1/leao2.wav');
+}
+
+
 function setup() {
     windowW= windowWidth;
     windowH= windowHeight;
+    audio1.play();
 
-  createCanvas(windowWidth,windowHeight);
+
+    createCanvas(windowWidth,windowHeight);
 
   capture = createCapture(VIDEO); //capture the webcam
   capture.id("cap")
@@ -106,7 +118,7 @@ function draw() {
       pop();
   }
 
-  if (timer>200){
+  if (timer>300){
       anim++;
         push();
         tint(255,255 - fade1);
@@ -115,13 +127,26 @@ function draw() {
         pop();
     }
 
+    if (timer>400){
+        push();
+        tint(255,fade2);
+        image(mao,-125+getParallaxX(100),-125+getParallaxY(100),windowW+250,windowH+250);
+        if (fade2<255) fade2+=30;
+        pop();
+    }
 
+    audio1.onended(function(){
+        if (interacted===false){
+            interacting=true;
+        }
+    });
 
-
-  if (timer>400 && interacted===false){
-      timerOn=false;
-      interacting=true;
-  }
+    audio2.onended(function(){
+        if (redirect===false){
+            window.location.replace("caminhos.html");
+            redirect=true;
+        }
+    });
 
   if (interacted===true){
       push();
@@ -135,22 +160,8 @@ function draw() {
   console.log(fade1);
 
     image(fundo3,-125+getParallaxX(90),-125+getParallaxY(60),windowW+250,windowH+250);
-    if (timer>300){
-        push();
-        tint(255,fade2);
-        image(mao,-125+getParallaxX(100),-125+getParallaxY(100),windowW+250,windowH+250);
-        if (fade2<255) fade2+=30;
-        pop();
-    }
 
-  if (timer>500){
 
-      if (redirect===false){
-          window.location.replace("caminhos.html");
-          redirect=true;
-      }
-
-  }
 
     draw_rect();
 
@@ -487,7 +498,9 @@ function generateAndDetect(){
 function sucessfulInteraction(){
   interacting=false;
   interacted=true;
-  n_movimentos= Math.floor(Math.random() * moves.length) + 1;
+    audio2.play();
+
+    n_movimentos= Math.floor(Math.random() * moves.length) + 1;
   movimentos_executar=[];
   for (i = 0; i < n_movimentos; i++) {
     x=Math.floor(Math.random() * n_movimentos)

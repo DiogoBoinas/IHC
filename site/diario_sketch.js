@@ -6,15 +6,29 @@ var y_final=0;
 var pagina1;
 var rato;
 var pag;
+var stringPag;
 var menos=0;
 var mais=0;
 var entrar=0;
+
+let timerSelectMinus=0;
+let timerSelectPlus=0;
+let timerSelect1=0;
+let timerSelect2=0;
+
+let selecting1;
+let selecting2;
+let changingMinus;
+let changingPlus;
+
+
+
+let fundo;
 
 
 
 function setup(){
 
-    createFile();
     createCanvas(windowWidth,windowHeight)
     capture = createCapture(VIDEO); //capture the webcam
     capture.id("cap");
@@ -32,35 +46,72 @@ function setup(){
                 //console.log(windowWidth);
                 //console.log("X Inicial:",x," Y Inicial:",y);
                 console.log("X Final:",x_final, " Y Inicial:",y_final);
-                if(x_final <= 100){
-                    if (menos<50){
-                        menos++;
-                    }else if(menos>=50){
-                        menos=0;
+
+                if(x_final <= windowW/5){
+                    changingMinus=true;
+                    if (timerSelectMinus<50 && pag!==1){
+                        timerSelectMinus++;
+                    }else if(timerSelectMinus>=50){
+                        timerSelectMinus=0;
                         pag--;
                     }
-                    console.log(menos);
-                }
-                if(x_final >= 1150){
-                    if (mais<50){
-                        mais++;
-                    }else if(mais>=50){
-                        mais=0;
+                }else if (x_final>=4*windowW/5){
+                    changingPlus=true;
+                    if (timerSelectPlus<50 && pag!==3){
+                        timerSelectPlus++;
+                    }else if(timerSelectPlus>=50){
+                        timerSelectPlus=0;
                         pag++;
                     }
-                    console.log(mais);
+                }else{
+                    timerSelectMinus=0;
+                    timerSelectPlus=0;
+                     changingMinus=false;
+                     changingPlus=false;
+                }
+                if (pag===1){
+                    if(x_final <= 3*windowW/5 + 230 && x_final >= 3*windowW/5){
+                        if(y_final >= 3*windowH/5 && y_final <=3*windowH/5 + 150){
+                            if (entrar<150){
+                                entrar++;
+                                selecting1=true;
+                            }else if(entrar>=150){
+                                entrar=0;
+                                window.location.replace("int1/caminhos.html");
+                            }
+                        }
+                    }else{
+                        selecting1=false;
+                        selecting2=false;
+                        entrar=0;
+                    }
                 }
 
                 if (pag===2){
-                    if(x_final <= 850 && x_final >= 800){
-                        if(y_final >= 500 && y_final <=550){
-                            if (entrar<50){
+                    if(x_final <= windowW/5 + 230 && x_final >= windowW/5){
+                        if(y_final >= 3*windowH/5 && y_final <=3*windowH/5 + 150){
+                            if (entrar<150){
                                 entrar++;
-                            }else if(entrar>=50){
+                                selecting1=true;
+                            }else if(entrar>=150){
                                 entrar=0;
-                                window.location.replace("http://www.w3schools.com");
+                                window.location.replace("int2/bruxa.html");
                             }
                         }
+                    }else if(x_final <= 3*windowW/5 + 230 && x_final >= 3*windowW/5){
+                        if(y_final >= 3*windowH/5 && y_final <=3*windowH/5 + 150){
+                            if (entrar<150){
+                                entrar++;
+                                selecting2=true;
+                            }else if(entrar>=150){
+                                entrar=0;
+                                window.location.replace("int3/potions.html");
+                            }
+                        }
+                    }else{
+                        selecting1=false;
+                        selecting2=false;
+                        entrar=0;
                     }
                 }
             });
@@ -72,12 +123,20 @@ function setup(){
 
 
     //paginas
+    fundo=loadImage("images/diario/fundo.png");
+
     pagina1 = loadImage('images/diario/pagina1.png');
+    pagina1mudar = loadImage('images/diario/pagina1-mudar.png');
+    pagina1selecionar = loadImage('images/diario/pagina1-selecionar.png');
     pagina2 = loadImage('images/diario/pagina2.png');
+    pagina2mudardireita = loadImage('images/diario/pagina2-mudardireita.png');
+    pagina2mudaresquerda = loadImage('images/diario/pagina2-mudaresquerda.png');
+    pagina2selecionar1 = loadImage('images/diario/pagina2-selecionar1.png');
+    pagina2selecionar2 = loadImage('images/diario/pagina2-selecionar2.png');
     pagina3 = loadImage('images/diario/pagina3.png');
-    pagina4 = loadImage('images/diario/pagina4.png');
-    pagina5 = loadImage('images/diario/pagina5.png');
-    pag=1;
+    pagina3mudar = loadImage('images/diario/pagina3-mudar.png');
+
+    pag=2;
 
 }
 
@@ -96,26 +155,44 @@ function reversing(x_final,screen_width){
     return screen_width + x_final
 }
 
+function getParallaxX(dif){
+    return map(x_final,0,windowW,-dif,dif,true);
+}
+
+function getParallaxY(dif){
+    return map(y_final,0,windowH,-dif,dif,true);
+}
+
+
 function draw(){
     clear();
-    if (pag===1)     image(pagina1, 0, 0,windowW,windowH);
+
+
+    image(fundo,-125+getParallaxX(10),-125+getParallaxY(10),windowW+250,windowH+250);
+    if (pag===1){
+        if (changingPlus) image(pagina1mudar, -25+getParallaxX(30),-25+getParallaxY(30),windowW+50,windowH+50);
+        else if (selecting1) image(pagina1selecionar, -25+getParallaxX(30),-25+getParallaxY(30),windowW+50,windowH+50);
+        else image(pagina1, -25+getParallaxX(30),-25+getParallaxY(30),windowW+50,windowH+50);
+    }
     if (pag===2){
-        image(pagina2, 0, 0,windowW,windowH);
-        rect(800, 500, 50, 50);
+        if (changingMinus) image(pagina2mudaresquerda, -25+getParallaxX(30),-25+getParallaxY(30),windowW+50,windowH+50);
+        else if (changingPlus) image(pagina2mudardireita, -25+getParallaxX(30),-25+getParallaxY(30),windowW+50,windowH+50);
+        else if (selecting1) image(pagina2selecionar1, -25+getParallaxX(30),-25+getParallaxY(30),windowW+50,windowH+50);
+        else if (selecting2) image(pagina2selecionar2, -25+getParallaxX(30),-25+getParallaxY(30),windowW+50,windowH+50);
+        else image(pagina2, -25+getParallaxX(30),-25+getParallaxY(30),windowW+50,windowH+50);
+
 
     }
-    if (pag===3)     image(pagina3, 0, 0,windowW,windowH);
-    if (pag===4)     image(pagina4, 0, 0,windowW,windowH);
-    if (pag===5)     image(pagina5, 0, 0,windowW,windowH);
+    if (pag===3){
+        if (changingMinus) image(pagina3mudar, -25+getParallaxX(30),-25+getParallaxY(30),windowW+50,windowH+50);
+        else image(pagina3, -25+getParallaxX(30),-25+getParallaxY(30),windowW+50,windowH+50);
+    }
+
 
 
 
     draw_rect();
-    push();
-    translate(windowW, windowH - capture.height / 2);
-    scale(-0.5, 0.5);
-    //tint(255, 126);
-    vid = image(capture, 0 , 0);
+
 
 
 

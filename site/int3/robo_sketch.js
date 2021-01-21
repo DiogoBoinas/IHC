@@ -22,6 +22,8 @@ let milho;
 
 let selecting=false;
 let timerSelect=false;
+var ratoSelecting;
+
 
 let audio;
 let playing=false;
@@ -36,7 +38,7 @@ let redirect=false;
 
 
 function preload(){
-   // audio=loadSound('espantalho.mp3');
+    audio=loadSound('../audio/int3/feiticeiro_robo.wav');
 }
 
 function setup() {
@@ -67,6 +69,10 @@ function setup() {
                         timerSelect++;
                         if (timerSelect>20){
                             interacted=true;
+                            if(playing===false){
+                                audio.play();
+                            }
+                            playing=true;
                         }
                     }
                 }else{
@@ -80,7 +86,7 @@ function setup() {
     tracking.track('#cap', colors);
 
     rato=loadImage("../images/rato.png");
-
+    ratoSelecting=loadImage("../images/rato_select.png");
 
 
   fundo=loadImage("../images/int3/fundo-personagens.png");
@@ -128,7 +134,7 @@ function draw() {
       timerOn=true;
   }
 
-  if (timer>100){
+  if (timer>70){
       anim++;
       push();
       tint(255,255 - fade1);
@@ -137,11 +143,12 @@ function draw() {
       pop();
   }
 
-  if (timer>200){
-      if (redirect===false){
-          window.location.replace("potions.html");
-          redirect=true;
-      }  }
+    audio.onended(function(){
+        if (redirect===false){
+            window.location.replace("potions.html");
+            redirect=true;
+        }
+    });
 
     draw_rect();
 
@@ -160,7 +167,6 @@ function draw() {
 function draw_rect(){
     if (selecting){
         push();
-        tint(0,255,0);
         image(alfinetes,x_final,y_final,50,50);
         pop();
     }else{

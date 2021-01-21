@@ -5,6 +5,7 @@ var x_final=0;
 var y_final=0;
 
 var rato;
+var ratoSelecting;
 var fundo;
 var heart;
 var alfinetes;
@@ -17,6 +18,9 @@ var entrar=0;
 
 let selecting=false;
 let timerSelect=0;
+
+var sair;
+
 
 
 
@@ -56,9 +60,15 @@ function setup(){
                         timerSelect++;
                         if (timerSelect > 50) window.location.replace("leao.html");
                     }
+                }else if(x_final <= windowW-sair.width - 10 + sair.width && x_final >= windowW-sair.width - 10){
+                    if(y_final >= 10 && y_final <=10+sair.height){
+                        selecting=true;
+                        timerSelect++;
+                        if (timerSelect>50)  window.location.replace("../diario.html");
+                    }
                 }else{
                     timerSelect=0;
-                    selecting = false;
+                    selecting=false;
                 }
 
             });
@@ -67,11 +77,13 @@ function setup(){
     tracking.track('#cap', colors);
 
     rato=loadImage("../images/rato.png");
+    ratoSelecting=loadImage("../images/rato_select.png");
 
     fundo = loadImage('../images/int3/fundo-frascos.png');
     heart = loadImage('../images/int3/heart.png');
     coragem = loadImage('../images/int3/coragem.png');
     alfinetes = loadImage('../images/int3/alfinetes.png');
+    sair=loadImage("../images/cruz.png");
 
 
 
@@ -81,18 +93,16 @@ function setup(){
 function draw_rect(){
     push();
     if (selecting){
-        push();
-        tint(0,255,0);
-        image(rato,x_final,y_final,50,50);
-        pop();
+        image(ratoSelecting,x_final,y_final,50,50);
     }else{
         image(rato,x_final,y_final,50,50);
     }
 
 }
 
+
 function three_simple(cam_height, cam_width, screen_height, screen_width, x, y){
-    x_final = - ((screen_width*x))/cam_width + 2*cam_width;
+    x_final = - ((screen_width*x))/cam_width + 2.25*cam_width;
     y_final = (screen_height*y)/cam_height;
     return x_final, y_final;
 }
@@ -110,8 +120,10 @@ function draw(){
 
 
     console.log(timerSelect);
+    image (sair,windowW-sair.width - 10,10);
 
     draw_rect();
+
     push();
     translate(windowW, windowH - capture.height / 2);
     scale(-0.5, 0.5);

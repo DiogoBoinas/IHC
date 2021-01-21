@@ -20,7 +20,8 @@ let espantalho;
 let espantalho2;
 let milho;
 
-let audio;
+let audio1;
+let audio2;
 let playing=false;
 
 let timer=0;
@@ -32,13 +33,16 @@ let redirect=false;
 
 
 function preload(){
-    audio=loadSound('espantalho.mp3');
+    audio1=loadSound('../audio/int1/espantalho1.wav');
+    console.log(audio1.duration());
+
+    audio2=loadSound('../audio/int1/espantalho2.wav');
 }
 
 function setup() {
     windowW= windowWidth;
     windowH= windowHeight;
-    audio.play();
+    audio1.play();
 
   createCanvas(windowWidth,windowHeight);
 
@@ -99,19 +103,23 @@ function draw() {
 
   total_side_movement = 0
     image(fundo,-125+getParallaxX(20),-125+getParallaxY(20),windowW+250,windowH+250);
-  if (timer>100){
+  if (timer>10){
       push();
       tint(255,fade1);
       image(espantalho,-125+getParallaxX(40),-125+getParallaxY(40),windowW+250,windowH+250);
       if (fade1<255 && interacted===false) fade1+=5;
       pop();
+      timerOn=false;
   }
 
-  if (timer>200 && interacted===false){
-      timerOn=false;
-      interacting=true;
-      audio.stop();
-  }
+  audio1.onended(function(){
+      if (interacted===false){
+          interacting=true;
+      }
+  });
+
+
+  console.log(audio1.currentTime());
 
   if (interacted===true){
       push();
@@ -124,13 +132,13 @@ function draw() {
 
     image(milho,-125+getParallaxX(60),-125+getParallaxY(60),windowW+250,windowH+250);
 
-  if (timer>500){
 
-      if (redirect===false){
-          window.location.replace("caminhos.html");
-          redirect=true;
-      }
-  }
+    audio2.onended(function(){
+        if (redirect===false){
+            window.location.replace("caminhos.html");
+            redirect=true;
+        }
+    });
 
     draw_rect();
 
@@ -482,6 +490,6 @@ function sucessfulInteraction(){
   console.log(n_movimentos);
   console.log(movimentos_executar);
 
-  audio.play();
+  audio2.play();
 
 }
