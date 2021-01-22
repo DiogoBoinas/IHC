@@ -116,16 +116,19 @@ function draw(){
         image(moldura2,0,0,windowW,windowH);
     }
 
-    if (timer<400){
+    if (timer<300){
         image(folha1,windowW/2 - folha1.width/4,windowH/2 - folha1.height/4,folha1.width/2,folha1.height/2);
+    }
+
+    if(timer===300){
         timerOn=false;
     }
 
-    if (timer>600){
+    if (timer===600){
         window.location.replace("calibragem2.html");
     }
 
-    console.log(timerSelect);
+    console.log(timer);
 
 
 

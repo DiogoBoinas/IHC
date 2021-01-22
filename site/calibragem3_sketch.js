@@ -13,6 +13,11 @@ let windowW;
 let windowH;
 let img1;
 
+let timerOn=true;
+let timer=0;
+
+let fase=0;
+
 function setup(){
     img1 = loadImage("gloves.jpeg")
     windowW = windowWidth;
@@ -20,46 +25,19 @@ function setup(){
     createCanvas(windowW,windowH)
     capture = createCapture(VIDEO); //capture the webcam
     capture.id("cap");
-    let moves = ['left','right','up','down','diagonal_direita_baixo','diagonal_esquerda_baixo','diagonal_direita_cima','diagonal_esquerda_cima'];
-    //ve quantos moviemntos pode criar de acordo com o tamanho de moves que existem
-    let n_movimentos= Math.floor(Math.random() * moves.length) + 1;
-    console.log("executar ")
-    console.log(n_movimentos)
-    console.log("movimentos")
-
-    var i;
-    let movimentos_executar=[]
-
-    //vai utilizar outro gerador para escolher n_movimentos numa sequencia random
-    for (i = 0; i < n_movimentos; i++) {
-        x=Math.floor(Math.random() * n_movimentos)
-        while(movimentos_executar.includes(moves[x])){
-            x=Math.floor(Math.random() * n_movimentos) //nao existir moves repetidos
-        }
-        movimentos_executar.push(moves[x])
-    }
-
-    console.log("movimentos gerados")
-    console.log(movimentos_executar)
-
-    y_moves = 0;
-    xmoveatual =0;
-    ymoveatual=0;
-    nummovs_d=0;
-    nummovs_e=0;
-    nummovs_c=0;
-    nummovs_b=0;
-    x_moves = 0;
-    nummovs_d_c=0;
-    nummovs_d_b=0;
-    nummovs_e_c=0;
-    nummovs_e_b=0;
-
-    var movimento_atual=0;
 
 
-    var atual_x=620//valor inicial da esquerda
-    var atual_y=0
+
+    rato=loadImage("images/rato.png");
+    folha1= loadImage('images/calibragem/visto2.png');
+    folha2= loadImage('images/calibragem/popup2.png');
+    folha3= loadImage('images/calibragem/visto3.png');
+
+    popup1= loadImage('images/calibragem/folha2.png');
+    popup2= loadImage('images/calibragem/folha3.png');
+
+
+
 
     var colors = new tracking.ColorTracker(['cyan']);
     colors.on('track', function(event) {
@@ -73,8 +51,8 @@ function setup(){
                 //console.log(windowWidth);
                 //console.log("X Inicial:",x," Y Inicial:",y);
                 console.log("X Final:",x_final, " Y Inicial:",y_final);
-                if(x_final >= 100 && x_final <= 200){
-                    if(y_final >= 100 && y_final <=200){
+                if(x_final >= 200 && x_final <= 300){
+                    if(y_final >= 300 && y_final <=400){
                         console.log("SUCCESS ESQ:CIMA");
                         bool1 = 1;
                     }
@@ -85,7 +63,7 @@ function setup(){
                         bool2 = 1;
                     }
                 }
-                if(x_final >= 1300 && x_final <= 1400){
+                if(x_final >= 1000 && x_final <= 1100){
                     if(y_final >= 100 && y_final <=200){
                         console.log("SUCCESS DIR:CIMA");
                         bool3 = 1;
@@ -103,8 +81,9 @@ function setup(){
                         bool5 = 1;
                     }
                 }
-                if(bool1 == 1 && bool2 == 1 && bool3 == 1 && bool4 == 1 && bool5 == 1){
-                    window.location.replace("../color_Tracking");
+                if(bool1 == 1 && bool3 == 1 && bool5 == 1){
+                    fase=2;
+                    timerOn=true;
                 }
             });
         }
@@ -114,12 +93,11 @@ function setup(){
 
 function draw_rect(){
     push()
-    image(img1,x_final,y_final,50,50);
-}
+    image(rato,x_final,y_final,50,50);}
 
 function three_simple(cam_height, cam_width, screen_height, screen_width, x, y){
-    x_final = -((screen_width*x))/cam_width + 2.75*cam_width;
-    y_final = (screen_height*y)/cam_height;
+    x_final = -((screen_width*x))/cam_width + 3*cam_width - 500;
+    y_final = (screen_height*y)/cam_height + 100;
     return x_final, y_final;
 }
 
@@ -133,6 +111,15 @@ function draw(){
         timer++;
     }
 
+    if (timer<300){
+        fase=0;
+    }
+
+    if(timer===300){
+        fase=1;
+        timerOn=false;
+    }
+
 
     push();
     //tint(255, 126);
@@ -141,21 +128,53 @@ function draw(){
     vid = image(capture, 0 , 0,windowW,windowH);
     pop();
     draw_rect();
-    if(bool1 == 0){
-        rect(100, 100, 100, 100);
+
+    if (fase===0){
+        image(folha2,0,0,windowW,windowH);
+    }else if (fase===1){
+        image(folha1,0,0,windowW,windowH);
+        if(bool1 == 0){
+            rect(200, 300, 100, 100);
+        }else{
+            push();
+            fill(0,220,50);
+            rect(200, 300, 100, 100);
+            pop();
+        }
+
+        if(bool3 == 0){
+            rect(1000, 100, 100, 100);
+        }else{
+            push();
+            fill(0,220,50);
+            rect(1000, 100, 100, 100);
+            pop();
+        }
+
+        if(bool5 == 0){
+            rect(700, 400, 100, 100);
+        }else{
+            push();
+            fill(0,220,50);
+            rect(700, 400, 100, 100);
+            pop();
+        }
     }
-    if(bool2 == 0){
-        rect(100, 800, 100, 100);
+
+    if (fase===2){
+        if (timer>300 && timer<500){
+            image(folha3,0,0,windowW,windowH);
+            image(popup1,windowW/2 - folha1.width/4,windowH/2 - folha1.height/4,folha1.width/2,folha1.height/2);
+        }else if (timer>500 && timer<700){
+            image(folha3,0,0,windowW,windowH);
+            image(popup2,windowW/2 - folha1.width/4,windowH/2 - folha1.height/4,folha1.width/2,folha1.height/2);
+        }else if (timer===700){
+            window.location.replace("diario.html");
+        }
+
     }
-    if(bool3 == 0){
-        rect(1300, 100, 100, 100);
-    }
-    if(bool4 == 0){
-        rect(1300, 800, 100, 100);
-    }
-    if(bool5 == 0){
-        rect(700, 400, 100, 100);
-    }
+
+
     pop()
 
 }

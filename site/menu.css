@@ -1,0 +1,38 @@
+body{
+    margin: 0;
+}
+#fundo{
+    background-image: url(Background.png);
+    width: 100%;
+}
+
+.buttons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    flex-direction: column;
+}
+
+#inicio{
+    height: 13%;
+}
+
+#fundo_sobre{
+    background-image: url(Background.png);
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+#back{
+    height: 80%;
+    width: 80%;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+#sobre_text{
+    height: 100%;
+    width: 100%;
+}

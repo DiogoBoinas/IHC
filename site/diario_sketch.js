@@ -26,6 +26,11 @@ let changingPlus;
 let fundo;
 
 
+function preload(){
+    intro=loadSound('audio/diario/intro.wav');
+    middle=loadSound('audio/diario/middle.mp3');
+    outro=loadSound('audio/diario/outro.mp3');
+}
 
 function setup(){
 
@@ -34,6 +39,7 @@ function setup(){
     capture.id("cap");
     windowW= windowWidth;
     windowH= windowHeight;
+    intro.play();
     var colors = new tracking.ColorTracker(['cyan']);
     colors.on('track', function(event) {
         if (event.data.length === 0) {
@@ -53,7 +59,16 @@ function setup(){
                         timerSelectMinus++;
                     }else if(timerSelectMinus>=50){
                         timerSelectMinus=0;
+                        if(pag===3){
+                            middle.play();
+                            outro.stop();
+                        }
+                        if(pag===2){
+                            intro.play();
+                            middle.stop();
+                        }
                         pag--;
+
                     }
                 }else if (x_final>=4*windowW/5){
                     changingPlus=true;
@@ -61,7 +76,16 @@ function setup(){
                         timerSelectPlus++;
                     }else if(timerSelectPlus>=50){
                         timerSelectPlus=0;
+                        if(pag===2){
+                            middle.stop();
+                            outro.play();
+                        }
+                        if(pag===1){
+                            intro.stop();
+                            middle.play();
+                        }
                         pag++;
+
                     }
                 }else{
                     timerSelectMinus=0;
@@ -136,7 +160,7 @@ function setup(){
     pagina3 = loadImage('images/diario/pagina3.png');
     pagina3mudar = loadImage('images/diario/pagina3-mudar.png');
 
-    pag=2;
+    pag=1;
 
 }
 
